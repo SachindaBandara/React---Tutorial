@@ -58,11 +58,12 @@ const RestaurantCard = (props) => {
 // Input - RestaurantCard ==> Output - RestaurantCardPromoted
 
 export const withPromotedLabel = (RestaurantCard) => {
-  return () => {
+  return (props) => {
     return (
       <div>
-        <label>Promoted</label>
-        <RestaurantCard />
+        <label className="absolute bg-black text-white m-2 p-2 rounded-lg">Promoted</label>
+        {/* Pass all the properties to the component ==>> {...props} */}
+        <RestaurantCard {...props}/>
       </div>
     );
   };

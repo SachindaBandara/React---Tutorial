@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 // import resList from "../utils/mockData";
-import RestaurantCard from "./RestaurentCard";
+import RestaurantCard, { withPromotedLabel } from "./RestaurentCard";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
@@ -10,6 +10,8 @@ const Body = () => {
   const [listOfRestaurants, setListOfRestaurants] = useState([]);
   const [filteredRestaurant, setFilteredRestaurant] = useState([]);
   const [searchText, setSearchText] = useState("");
+
+  const RestaurantCardPromoted = withPromotedLabel(RestaurantCard);
 
   // Destructuering
   // const arr = useState(resList);
@@ -83,22 +85,21 @@ const Body = () => {
         </div>
 
         {/* Filter Button */}
-        <div  className="search m-4 p-4 flex items-center">
-        <button
-          className="px-4 py-2 bg-green-50 rounded-lg"
-          onClick={() => {
-            // call back function
-            // Filter logic
-            const filtered = listOfRestaurants.filter(
-              (res) => res.info.avgRating >= 4.4
-            );
-            setFilteredRestaurant(filtered);
-          }}
-        >
-          Top Rated Restaurant
-        </button>
+        <div className="search m-4 p-4 flex items-center">
+          <button
+            className="px-4 py-2 bg-green-50 rounded-lg"
+            onClick={() => {
+              // call back function
+              // Filter logic
+              const filtered = listOfRestaurants.filter(
+                (res) => res.info.avgRating >= 4.4
+              );
+              setFilteredRestaurant(filtered);
+            }}
+          >
+            Top Rated Restaurant
+          </button>
         </div>
-       
       </div>
 
       <div className="flex flex-wrap">
@@ -119,7 +120,11 @@ const Body = () => {
             key={restaurants.info.id}
           >
             {/* if the restaurant is promoted then add a promoted lable to it */}
-            <RestaurantCard resData={restaurants.info} />
+            {restaurants.info.promoted ? (
+              <RestaurantCardPromoted resData={restaurants.info} />
+            ) : (
+              <RestaurantCard resData={restaurants.info} />
+            )}
           </Link>
         ))}
       </div>
