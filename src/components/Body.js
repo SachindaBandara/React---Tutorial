@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 // import resList from "../utils/mockData";
 import RestaurantCard, { withPromotedLabel } from "./RestaurentCard";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
+import UserContext from "../utils/UserContext";
 
 const Body = () => {
   // useState  Hook => create local state variable
@@ -47,6 +48,8 @@ const Body = () => {
         Looks like you are offline! Please check your internet connection!
       </h1>
     );
+
+  const { loggedInUser, setUserName } = useContext(UserContext);
 
   // Condition Rendering
   // if (listOfRestaurants.length === 0) {
@@ -99,6 +102,15 @@ const Body = () => {
           >
             Top Rated Restaurant
           </button>
+        </div>
+
+        <div className="search m-4 p-4 flex items-center">
+          <label>User name :</label>
+          <input
+            className="border border-black p-2"
+            value={loggedInUser}
+            onChange={(e) => setUserName(e.target.value)}
+          />
         </div>
       </div>
 
