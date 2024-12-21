@@ -1,4 +1,6 @@
+import { useContext } from "react";
 import { CDN_URL } from "../utils/constants";
+import UserContext from "../utils/UserContext";
 
 // JS object for inline styling
 const styleCard = {
@@ -35,7 +37,7 @@ const RestaurantCard = (props) => {
   // "?." is optional chaining operator
 
   return (
-    <div className="m-4 p-4 w-[250px] rounded-md bg-gray-50 hover:bg-gray-400">
+    <div data-testid="resCard" className="m-4 p-4 w-[250px] rounded-md bg-gray-50 hover:bg-gray-400">
       <img
         className="rounded-md"
         alt="res-logo"

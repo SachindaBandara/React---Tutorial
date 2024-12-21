@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 // import resList from "../utils/mockData";
-import RestaurantCard, { withPromotedLabel } from "./RestaurentCard";
+import RestaurantCard, { withPromotedLabel } from "./RestaurantCard";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
@@ -66,6 +66,7 @@ const Body = () => {
         <div className="search m-4 p-4">
           <input
             type="text"
+            data-testid="searchInput"
             className="border border-solid border-black"
             value={searchText}
             onChange={(e) => {
