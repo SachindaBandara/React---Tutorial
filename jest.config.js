@@ -193,6 +193,11 @@ const config = {
 
   // Whether to use watchman for file crawling
   // watchman: true,
+
+  // Fix the ==> ReferenceError: TextEncoder is not defined
+  setupFilesAfterEnv: ["<rootDir>/jest.setup.js"],
 };
 
 module.exports = config;
+
+
