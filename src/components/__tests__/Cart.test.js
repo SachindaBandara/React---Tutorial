@@ -5,16 +5,17 @@ import Cart from "../Cart";
 import MOCK_DATA from "../mockData/mockResMenu.json";
 import { Provider } from "react-redux";
 import appStore from "../../utils/appStore";
-import { BrowserRouter } from "react-router";
+import { BrowserRouter } from "react-router-dom"; // Fixed import
 import "@testing-library/jest-dom";
 
+// Mock fetch globally
 global.fetch = jest.fn(() =>
   Promise.resolve({
     json: () => Promise.resolve(MOCK_DATA),
   })
 );
 
-test("should load RestuarantMenu component", async () => {
+test("should load RestaurantMenu component", async () => {
   await act(async () =>
     render(
       <BrowserRouter>
@@ -27,31 +28,34 @@ test("should load RestuarantMenu component", async () => {
     )
   );
 
-  // go to "Biriyani (5)" accordian header
-  const accordianHeader = screen.getByText("Biriyani (5)");
-  // click accordian header
-  fireEvent.click(accordianHeader);
-  //check 5 Biriyani items have
+  // Find "Biriyani (5)" accordion header
+  const accordionHeader = screen.getByText("Biriyani (5)");
+  // Click accordion header
+  fireEvent.click(accordionHeader);
+
+  // Check 5 Biriyani items are rendered
   expect(screen.getAllByTestId("foodItems").length).toBe(5);
-  //check any item is added to the cart
+
+  // Check cart starts empty
   expect(screen.getByText("Cart (0)")).toBeInTheDocument();
-  // go to the" Add +" button
-  const addBtn = screen.getAllByRole("button", { name: "Add +" });
-  // click the" Add +" button
-  fireEvent.click(addBtn[0]);
-  // check one item was added to the cart
+
+  // Find and click "Add +" buttons
+  const addButtons = screen.getAllByRole("button", { name: "Add +" });
+  fireEvent.click(addButtons[0]); // Add first item
   expect(screen.getByText("Cart (1)")).toBeInTheDocument();
-  // click the" Add +" button
-  fireEvent.click(addBtn[1]);
-  // check second item was added to the cart
+
+  fireEvent.click(addButtons[1]); // Add second item
   expect(screen.getByText("Cart (2)")).toBeInTheDocument();
-  // check how many items cart has
-  // foodItems = 7 ( 5 + 2)
+
+  // Check total food items after adding 2 to cart (5 original + 2 in cart)
   expect(screen.getAllByTestId("foodItems").length).toBe(7);
-  // click "Clear Cart" button
+
+  // Click "Clear Cart" button
   fireEvent.click(screen.getByRole("button", { name: "Clear Cart" }));
-  // check any item has been in the cart
+
+  // Check food items are back to 5
   expect(screen.getAllByTestId("foodItems").length).toBe(5);
-  // check "Cart is empty!" is displyed
+
+  // Check "Cart is empty!" is displayed
   expect(screen.getByText("Cart is empty!")).toBeInTheDocument();
 });
