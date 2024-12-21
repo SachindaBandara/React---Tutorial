@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, current } from "@reduxjs/toolkit";
 
 // create cartSlice
 const cartSlice = createSlice({
@@ -8,13 +8,24 @@ const cartSlice = createSlice({
   },
   reducers: {
     addItem: (state, action) => {
+      // Redux Toolkit uses immer BTS
       state.items.push(action.payload);
     },
     removeItem: (state, action) => {
       state.items.pop();
     },
+
+    // OrignalState = {items: ["buger"]}
     clearCart: (state) => {
-      state.items.length = 0;
+      state.items.length = 0; // Modify current state
+      //return {items: []} 
+
+      //---------------------------------
+      // console.log(state); // buger
+      // console.log(current.state); // original state
+
+      // state = []; // Local variable ( That does not chnged the current state )
+      // console.log(state);
     },
   },
 });
